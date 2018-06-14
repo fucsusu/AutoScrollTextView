@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.fucc.autotextview.MainActivity">
+
+    <com.example.fucc.autotextview.AutoTextView.AutoScrollTextView
+        android:id="@+id/auto_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:textEffect="shader"
+        android:background="#0cb3c2"
+        app:textColor="#f1e02d"
+        app:textSpeed="15"
+        android:text="Hello World!" />
+
+</android.support.constraint.ConstraintLayout>
