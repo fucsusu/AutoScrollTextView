@@ -54,18 +54,21 @@ public class AutoTextModeBase implements AutoTextModempl {
     //配置参数
     @Override
     public void startConfigure(Context mContext, AutoScrollTextBean autoScrollTextBean) {
-        this.autoScrollTextBean=autoScrollTextBean;
+        this.autoScrollTextBean = autoScrollTextBean;
         this.mContext = mContext;
         mText = autoScrollTextBean.getTextDetail().trim();
         mPaintText.setColor(Color.parseColor(autoScrollTextBean.getTextColor().trim()));
         mBackGroundColor = Color.parseColor(autoScrollTextBean.getTextBackbroundcolor());
     }
 
+    //开启动画
     @Override
     public void startAnim() {
+        setPaintTextSize();
         drawView(posx);
     }
 
+    //结束动画回收资源
     @Override
     public void stopAnim() {
         if (mAnimator != null) {
@@ -74,8 +77,7 @@ public class AutoTextModeBase implements AutoTextModempl {
         }
     }
 
-    //设置字体大小
-    @Override
+    //根据控件大小设置字体大小
     public void setPaintTextSize() {
         this.posy = mHeight;
         double textHeight;

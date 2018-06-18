@@ -25,8 +25,6 @@ public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
     //移动速度
     private int speed;
 
-
-    @Override
     public void setPaintTextSize() {
         this.posy = mHeight;
         double textHeight;

@@ -18,8 +18,6 @@ public interface AutoTextModempl {
     void startAnim();
     //结束动画
     void stopAnim();
-    //设置字体大小
-    void setPaintTextSize();
     //计算控件大小
     void onMeasure(int with, int height);
     //获取截取屏幕的bitmap
