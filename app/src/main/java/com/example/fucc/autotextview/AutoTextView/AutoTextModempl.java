@@ -13,7 +13,7 @@ import android.view.SurfaceHolder;
 
 public interface AutoTextModempl {
     //配置数据
-    void startConfigure(Context mContext, AutoScrollTextBean resourceBean);
+    void startConfigure(AutoScrollTextBean resourceBean);
     //开始动画
     void startAnim();
     //结束动画
@@ -24,4 +24,6 @@ public interface AutoTextModempl {
     Bitmap captureScreen();
     //获取SurfaceHolder
     void setSurfaceHodler(SurfaceHolder mHolder);
+    //判断是否开始动画
+    boolean isStartAnim();
 }

@@ -20,6 +20,7 @@ public class AutoTextModeShader extends AutoTextModeBase {
 
     @Override
     public void startAnim() {
+        super.startAnim();
         int mCurrentTextColor = mPaintText.getColor();
         shaderMatrix = new Matrix();
 
@@ -48,7 +49,7 @@ public class AutoTextModeShader extends AutoTextModeBase {
                 float animatedValue = (float) animation.getAnimatedValue();
                 shaderMatrix.setTranslate(2 * animatedValue, 0);
                 shader.setLocalMatrix(shaderMatrix);
-                drawView(posx);
+                drawView(posx,posy);
             }
         });
         mAnimator.start();

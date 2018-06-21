@@ -15,7 +15,6 @@ public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
 
     //绘制刷新帧数
     public static final int TIME_IN_FRAME = 15;
-
     //判断是否开始绘制
     private boolean isDrawView;
     //移动结束位置
@@ -37,11 +36,12 @@ public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
         } while (textHeight > mHeight);
         posy -= 10;
         mPaintText.setTextSize(posy);
-        this.posy = (mHeight - (fm.descent - fm.leading));
+        this.posy = (int) (mHeight - (fm.descent - fm.leading));
     }
 
     @Override
     public void startAnim() {
+        super.startAnim();
         initRunData();
         new Thread(this).start();
     }
@@ -58,11 +58,11 @@ public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
         isDrawView = true;
 
         while (isDrawView) {
-            mDrawX = mDrawX + speed;
+            posx = posx + speed;
             long startTime = System.currentTimeMillis();
 
             synchronized (surfaceHolder) {
-                drawView(mDrawX);
+                drawView(posx,posy);
             }
 
             long endTime = System.currentTimeMillis();
@@ -79,8 +79,8 @@ public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
             }
 
 
-            if ((mDrawX < moveEnd && speed <0)||(mDrawX > moveEnd && speed >0)) {
-                mDrawX = moveStart;
+            if ((posx < moveEnd && speed <0)||(posx > moveEnd && speed >0)) {
+                posx = moveStart;
             }
         }
     }
@@ -103,6 +103,6 @@ public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
             speed = autoScrollTextBean.getTextSpeed();
             mText = new StringBuffer(mText).reverse().toString();
         }
-        mDrawX = moveStart;
+        posx = moveStart;
     }
 }

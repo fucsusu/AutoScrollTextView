@@ -8,14 +8,18 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
 import com.example.fucc.autotextview.R;
 
+import java.util.ArrayList;
+
 
 /**
+ * 自适应文本view
  * Created by yao on 2018/3/12.
  */
 
@@ -27,7 +31,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
     protected static final String ANIM_NONE = "0";
     protected static final String ANIM_SCROLL = "1";
     protected static final String ANIM_SHADER = "2";
-    protected static final String ANIM_SCROLL_GROUP = "3";
+    protected static final String ANIM_SWITCH = "3";
 
     //滚动方向
     protected static final String ANIM_LEFT = "0";
@@ -37,7 +41,6 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
     private AutoTextModempl textModempl;
 
     private SurfaceHolder mSurfaceHolder;
-    private Context mContext;
 
     private static AutoScrollTextView acquire;
     private AutoScrollTextBean autoScrollTextBean;
@@ -53,6 +56,8 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
 
     public AutoScrollTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Log.e(TAG, "AutoScrollTextView: ");
+        initView(context);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AutoScrollTextView);
         String text = ta.getString(R.styleable.AutoScrollTextView_android_text);
         String textColor = ta.getString(R.styleable.AutoScrollTextView_textColor);
@@ -62,7 +67,8 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         int textSpeed = ta.getInt(R.styleable.AutoScrollTextView_textSpeed, 5);
 
         autoScrollTextBean = new AutoScrollTextBean(text, textbg, textColor, textEffect, textDirection, textSpeed);
-        initView(context);
+        startConfigure(autoScrollTextBean);
+        ta.recycle();
     }
 
     public static AutoScrollTextView obtain(Context context) {
@@ -75,15 +81,11 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
     //初始化
     @SuppressLint("ResourceAsColor")
     private void initView(Context context) {
-        mContext = context;
         mSurfaceHolder = this.getHolder();
         mSurfaceHolder.addCallback(this);
 
         setZOrderOnTop(true);
         setFocusable(true);
-
-
-        startConfigure(autoScrollTextBean);
     }
 
     //传入配置 根据resource是否为null 进行判断
@@ -96,14 +98,27 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
             case ANIM_SHADER:
                 textModempl = new AutoTextModeShader();
                 break;
+            case ANIM_SWITCH:
+                textModempl=new AutoTextModeSwitch();
+                break;
             default:
                 textModempl = new AutoTextModeBase();
                 break;
         }
-        textModempl.startConfigure(mContext, autoScrollTextBean);
+        textModempl.startConfigure(autoScrollTextBean);
 
         //开启绘制
         startAnim();
+    }
+
+    public void addSwitchData(ArrayList<String> data) {
+        ArrayList<String> switchDatas = autoScrollTextBean.getSwitchDatas();
+        if (switchDatas != null) {
+            switchDatas.addAll(data);
+        } else {
+            autoScrollTextBean.setSwitchDatas(data);
+        }
+        textModempl.startConfigure(autoScrollTextBean);
     }
 
 
@@ -127,7 +142,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         return textModempl.captureScreen();
     }
 
-    private void setTextSizeAndStartAnim() {
+    private void startTextModeAnim() {
         textModempl.startAnim();
     }
 
@@ -136,7 +151,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         post(new Runnable() {
             @Override
             public void run() {
-                setTextSizeAndStartAnim();
+                startTextModeAnim();
             }
         });
     }
@@ -155,6 +170,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         mSurfaceHolder = holder;
         mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
         textModempl.setSurfaceHodler(mSurfaceHolder);
+        //textModempl.startAnim();
     }
 
     @Override

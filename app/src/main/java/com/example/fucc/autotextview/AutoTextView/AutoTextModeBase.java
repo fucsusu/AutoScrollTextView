@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 /**
@@ -25,7 +26,7 @@ public class AutoTextModeBase implements AutoTextModempl {
 
     //文字绘制XY轴
     protected float posy;
-    protected int posx = 0;
+    protected float posx = 0;
 
     protected TextPaint mPaintText;
     //文本内容
@@ -37,12 +38,9 @@ public class AutoTextModeBase implements AutoTextModempl {
     protected int mDuration = 10;
     protected SurfaceHolder surfaceHolder;
 
-    //文字起始位置
-    protected int mDrawX = 0;
-
-    protected Context mContext;
-
     protected AutoScrollTextBean autoScrollTextBean;
+
+    protected boolean isStartAnim = false;
 
     public AutoTextModeBase() {
         this.mPaintText = new TextPaint();
@@ -53,9 +51,8 @@ public class AutoTextModeBase implements AutoTextModempl {
 
     //配置参数
     @Override
-    public void startConfigure(Context mContext, AutoScrollTextBean autoScrollTextBean) {
+    public void startConfigure(AutoScrollTextBean autoScrollTextBean) {
         this.autoScrollTextBean = autoScrollTextBean;
-        this.mContext = mContext;
         mText = autoScrollTextBean.getTextDetail().trim();
         mPaintText.setColor(Color.parseColor(autoScrollTextBean.getTextColor().trim()));
         mBackGroundColor = Color.parseColor(autoScrollTextBean.getTextBackbroundcolor());
@@ -65,16 +62,19 @@ public class AutoTextModeBase implements AutoTextModempl {
     @Override
     public void startAnim() {
         setPaintTextSize();
-        drawView(posx);
+        drawView(posx, posy);
+        isStartAnim = true;
     }
 
     //结束动画回收资源
     @Override
     public void stopAnim() {
         if (mAnimator != null) {
+            Log.e(TAG, "stopAnim: ");
             mAnimator.cancel();
             mAnimator = null;
         }
+        isStartAnim = false;
     }
 
     //根据控件大小设置字体大小
@@ -96,9 +96,8 @@ public class AutoTextModeBase implements AutoTextModempl {
         posx -= 10;
         mPaintText.setTextSize(posy);
         fm = mPaintText.getFontMetrics();
-        this.posy = mHeight / 2 + (fm.descent - fm.ascent) / 2 - (fm.descent - fm.leading) / 2;
-        this.posx = (int) ((mWidth - mPaintText.measureText(mText)) / 2);
-        this.mDrawX = posx;
+        this.posy = (mHeight / 2 + (fm.descent - fm.ascent) / 2 - (fm.descent - fm.leading) / 2);
+        this.posx = ((mWidth - mPaintText.measureText(mText)) / 2);
     }
 
     //获取控件宽高
@@ -109,13 +108,13 @@ public class AutoTextModeBase implements AutoTextModempl {
     }
 
     //绘制视图
-    protected void drawView(int x) {
+    protected void drawView(float x, float y) {
         if (surfaceHolder == null) {
             return;
         }
         Canvas canvas = surfaceHolder.lockCanvas();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        canvas.drawText(mText, x, posy, mPaintText);
+        canvas.drawText(mText, x, y, mPaintText);
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
@@ -126,12 +125,17 @@ public class AutoTextModeBase implements AutoTextModempl {
         Bitmap bitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(mBackGroundColor);
-        canvas.drawText(mText, mDrawX, posy, mPaintText);
+        canvas.drawText(mText, posx, posy, mPaintText);
         return bitmap;
     }
 
     @Override
     public void setSurfaceHodler(SurfaceHolder mHolder) {
         surfaceHolder = mHolder;
+    }
+
+    @Override
+    public boolean isStartAnim() {
+        return isStartAnim;
     }
 }

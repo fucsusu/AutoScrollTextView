@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="AutoScrollTextView">
-        <attr name="android:text"/>
-        <attr name="textColor" format="color|string"/>
-        <attr name="android:background"/>
+        <attr name="android:text" />
+        <attr name="textColor" format="color|string" />
+        <attr name="android:background" />
         <attr name="textEffect" format="enum">
-            <enum name="scroll" value="1"/>
-            <enum name="shader" value="2"/>
-            <enum name="groupscroll" value="3"/>
-            <enum name="none" value="0"/>
+            <enum name="scroll" value="1" />
+            <enum name="shader" value="2" />
+            <enum name="switch_horizontal" value="3" />
+            <enum name="none" value="0" />
         </attr>
         <attr name="textScrollDirection" format="enum">
-            <enum name="left" value="0"/>
-            <enum name="right" value="1"/>
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
         </attr>
-        <attr name="textSpeed" format="integer"/>
+        <attr name="textSpeed" format="integer" />
     </declare-styleable>
 </resources>

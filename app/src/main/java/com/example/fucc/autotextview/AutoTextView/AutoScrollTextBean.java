@@ -1,9 +1,12 @@
 package com.example.fucc.autotextview.AutoTextView;
 
+import java.util.ArrayList;
+
 import static com.example.fucc.autotextview.AutoTextView.AutoScrollTextView.ANIM_NONE;
 import static com.example.fucc.autotextview.AutoTextView.AutoScrollTextView.ANIM_RIGHT;
 
 /**
+ * 数据实体类
  * Created by fucc on 2018/6/1.
  */
 
@@ -17,14 +20,16 @@ public class AutoScrollTextBean {
      * 4.动画类型
      * 5.滚动速度
      * 6.背景颜色
+     * 7.上下切换数据
      */
 
     private String textDetail = "hello word!!!";
-    private String textBackbroundcolor="#122223";
-    private String textColor="#984512";
-    private String textEffect=ANIM_NONE;
-    private String textScrollDirection=ANIM_RIGHT;
-    private int textSpeed=5;
+    private String textBackbroundcolor = "#122223";
+    private String textColor = "#984512";
+    private String textEffect = ANIM_NONE;
+    private String textScrollDirection = ANIM_RIGHT;
+    private int textSpeed = 5;
+    private ArrayList<String> switchDatas=null;
 
     public AutoScrollTextBean(String textDetail, String textBackbroundcolor, String textColor, String textEffect, String textScrollDirection, int textSpeed) {
         if (textDetail != null) {
@@ -96,4 +101,11 @@ public class AutoScrollTextBean {
         this.textSpeed = textSpeed;
     }
 
+    public ArrayList<String> getSwitchDatas() {
+        return switchDatas;
+    }
+
+    public void setSwitchDatas(ArrayList<String> switchDatas) {
+        this.switchDatas = switchDatas;
+    }
 }
