@@ -10,7 +10,7 @@ import android.view.animation.LinearInterpolator;
 /**
  * Created by fucc on 2018/5/30.
  *
- * 着色器渲染模式
+ * 着色器渲染模式显示类
  */
 
 public class AutoTextModeShader extends AutoTextModeBase {

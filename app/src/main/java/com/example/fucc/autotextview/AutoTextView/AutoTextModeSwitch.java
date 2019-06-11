@@ -12,7 +12,7 @@ import java.util.logging.Handler;
 /**
  * Created by fucc on 2018/6/21.
  * <p>
- * 上下切换模式
+ * 上下切换模式显示类
  */
 
 public class AutoTextModeSwitch extends AutoTextModeBase {
@@ -26,8 +26,8 @@ public class AutoTextModeSwitch extends AutoTextModeBase {
         if (autoScrollTextBean.getSwitchDatas() != null && autoScrollTextBean.getSwitchDatas().size() > 0) {
             index = 0;
             mText = autoScrollTextBean.getSwitchDatas().get(index);
-            nextText = autoScrollTextBean.getSwitchDatas().get(index + 1);
             index = ++index % autoScrollTextBean.getSwitchDatas().size();
+            nextText = autoScrollTextBean.getSwitchDatas().get(index);
         }
     }
 

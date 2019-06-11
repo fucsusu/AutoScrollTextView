@@ -15,7 +15,8 @@ import android.view.SurfaceHolder;
 /**
  * Created by fucc on 2018/5/29.
  * <p>
- * 自适应文本的基类
+ * 实现类的基类
+ * 实现了根据控件高度设置字体的大小以及获取当前控件的画面
  */
 
 public class AutoTextModeBase implements AutoTextModempl {

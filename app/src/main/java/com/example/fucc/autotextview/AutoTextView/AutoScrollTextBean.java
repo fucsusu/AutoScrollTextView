@@ -2,6 +2,7 @@ package com.example.fucc.autotextview.AutoTextView;
 
 import java.util.ArrayList;
 
+import static com.example.fucc.autotextview.AutoTextView.AutoScrollTextView.ANIM_LEFT;
 import static com.example.fucc.autotextview.AutoTextView.AutoScrollTextView.ANIM_NONE;
 import static com.example.fucc.autotextview.AutoTextView.AutoScrollTextView.ANIM_RIGHT;
 
@@ -27,7 +28,7 @@ public class AutoScrollTextBean {
     private String textBackbroundcolor = "#122223";
     private String textColor = "#984512";
     private String textEffect = ANIM_NONE;
-    private String textScrollDirection = ANIM_RIGHT;
+    private String textScrollDirection = ANIM_LEFT;
     private int textSpeed = 5;
     private ArrayList<String> switchDatas=null;
 

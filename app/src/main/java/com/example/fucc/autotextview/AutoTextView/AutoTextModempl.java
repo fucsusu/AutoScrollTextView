@@ -8,7 +8,7 @@ import android.view.SurfaceHolder;
 /**
  * Created by fucc on 2018/5/29.
  *
- * 自适应textview模式接口
+ * 实现类的接口
  */
 
 public interface AutoTextModempl {

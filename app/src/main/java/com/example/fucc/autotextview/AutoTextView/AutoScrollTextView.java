@@ -47,7 +47,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
 
     public AutoScrollTextView(Context context) {
         super(context);
-        initView(context);
+        initView();
     }
 
     public AutoScrollTextView(Context context, @Nullable AttributeSet attrs) {
@@ -56,8 +56,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
 
     public AutoScrollTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Log.e(TAG, "AutoScrollTextView: ");
-        initView(context);
+        initView();
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AutoScrollTextView);
         String text = ta.getString(R.styleable.AutoScrollTextView_android_text);
         String textColor = ta.getString(R.styleable.AutoScrollTextView_textColor);
@@ -79,8 +78,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
     }
 
     //初始化
-    @SuppressLint("ResourceAsColor")
-    private void initView(Context context) {
+    private void initView() {
         mSurfaceHolder = this.getHolder();
         mSurfaceHolder.addCallback(this);
 
@@ -107,7 +105,7 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         }
         textModempl.startConfigure(autoScrollTextBean);
 
-        //开启绘制
+        //开启动画
         startAnim();
     }
 
@@ -142,16 +140,12 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         return textModempl.captureScreen();
     }
 
-    private void startTextModeAnim() {
-        textModempl.startAnim();
-    }
-
     //开启动画
     private void startAnim() {
         post(new Runnable() {
             @Override
             public void run() {
-                startTextModeAnim();
+                textModempl.startAnim();
             }
         });
     }
@@ -170,7 +164,6 @@ public class AutoScrollTextView extends SurfaceView implements SurfaceHolder.Cal
         mSurfaceHolder = holder;
         mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
         textModempl.setSurfaceHodler(mSurfaceHolder);
-        //textModempl.startAnim();
     }
 
     @Override

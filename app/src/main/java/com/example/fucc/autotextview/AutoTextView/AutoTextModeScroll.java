@@ -8,7 +8,7 @@ import static com.example.fucc.autotextview.AutoTextView.AutoScrollTextView.ANIM
 /**
  * Created by fucc on 2018/5/30.
  * <p>
- * 滚动模式
+ * 滚动模式实现类
  */
 
 public class AutoTextModeScroll extends AutoTextModeBase implements Runnable {
